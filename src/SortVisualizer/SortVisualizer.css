@@ -1,0 +1,13 @@
+.sort-visualizer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: flex-end;
+}
+
+.bar {
+  display: flex;
+  background-color: cadetblue;
+  border: 1px solid black;
+  margin: 0 1px;
+}
