@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./SortVisualizer.css";
 
+import Bar from "../Bar";
+import Block from "../Block/Block";
+
 const N = 80;
 
 function generateRandomArray(n) {
@@ -15,24 +18,24 @@ export class SortVisualizer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arr: generateRandomArray(N),
+      arr: generateRandomArray(N).sort((val1, val2) => val1 - val2),
       n: N,
     };
   }
 
   render() {
+    console.log(this.state.arr);
     return (
       <div className="sort-visualizer">
-        {this.state.arr.map((bar, idx) => (
-          <div
-            className="bar"
-            key={idx}
-            style={{
-              width: `calc(${100 / this.state.n}% - 2px)`,
-              height: `${bar}%`,
-            }}
-          ></div>
-        ))}
+        {this.state.arr.map((val, idx) => {
+          return (
+            <Block
+              key={idx}
+              bar={new Bar(val)}
+              width={`calc(${100 / this.state.n}% - 2px)`}
+            />
+          );
+        })}
       </div>
     );
   }
