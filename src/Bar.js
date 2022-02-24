@@ -1,7 +1,7 @@
 class Bar {
-  constructor(val) {
+  constructor(val, state = "INIT") {
     this.value = val;
-    this.state = "INIT";
+    this.state = state;
   }
 }
 
