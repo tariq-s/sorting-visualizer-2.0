@@ -14,72 +14,69 @@ function generateRandomArray(n) {
   return array;
 }
 
-function getBubbleSortAnimations(array) {
-  const arr = [];
-  const n = array.length;
-  for (let i = 0; i < N; i++) {
-    arr[i] = array[i].value;
-  }
-
-  const animations = [];
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = 0; j < n - 1 - i; j++) {
-      animations.push({
-        [j]: new Bar(arr[j], "SELECT"),
-        [j + 1]: new Bar(arr[j + 1], "SELECT"),
-      });
-      if (arr[j] > arr[j + 1]) {
-        animations.push({
-          [j]: new Bar(arr[j + 1], "SELECT"),
-          [j + 1]: new Bar(arr[j], "SELECT"),
-        });
-        let temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-      }
-      animations.push({
-        [j]: new Bar(arr[j], "INIT"),
-        [j + 1]: new Bar(arr[j + 1], "INIT"),
-      });
-    }
-    animations.push({ [n - 1 - i]: new Bar(arr[n - 1 - i], "SORTED") });
-  }
-  if (n > 0) animations.push({ [0]: new Bar(arr[0], "SORTED") });
-  return animations;
-}
-
-export class SortVisualizer extends Component {
+class SortVisualizer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       arr: generateRandomArray(N),
       n: N,
     };
-    this.beginAnimation = this.beginAnimation.bind(this);
+    this.animate = this.animate.bind(this);
+    this.beginBubbleSort = this.beginBubbleSort.bind(this);
   }
 
-  async beginAnimation() {
-    const animations = getBubbleSortAnimations(this.state.arr);
+  async animate(animation) {
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this.setState((prevState) => {
+          for (const idx of Object.keys(animation)) {
+            prevState.arr[idx] = animation[idx];
+          }
+          return prevState;
+        });
+        resolve();
+      }, 10);
+    });
+  }
 
-    for (const animation of animations) {
-      this.setState((prevState) => {
-        for (const idx of Object.keys(animation)) {
-          prevState.arr[idx] = animation[idx];
-        }
-        return prevState;
-      });
-
-      await new Promise((resolve, reject) => {
-        let timeOut = setTimeout(() => {
-          clearTimeout(timeOut);
-          resolve("loop done");
-        }, 10);
-      });
+  async beginBubbleSort() {
+    const arr = [];
+    const n = this.state.arr.length;
+    for (let i = 0; i < N; i++) {
+      arr[i] = this.state.arr[i].value;
     }
+
+    for (let i = 0; i < n - 1; i++) {
+      for (let j = 0; j < n - 1 - i; j++) {
+        await this.animate({
+          [j]: new Bar(arr[j], "SELECT"),
+          [j + 1]: new Bar(arr[j + 1], "SELECT"),
+        });
+
+        if (arr[j] > arr[j + 1]) {
+          await this.animate({
+            [j]: new Bar(arr[j + 1], "SELECT"),
+            [j + 1]: new Bar(arr[j], "SELECT"),
+          });
+
+          let temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
+        }
+        await this.animate({
+          [j]: new Bar(arr[j], "INIT"),
+          [j + 1]: new Bar(arr[j + 1], "INIT"),
+        });
+      }
+      await this.animate({ [n - 1 - i]: new Bar(arr[n - 1 - i], "SORTED") });
+    }
+    if (n > 0) await this.animate({ [0]: new Bar(arr[0], "SORTED") });
   }
+
   componentDidMount() {
-    this.beginAnimation();
+    this.beginBubbleSort();
   }
+
   render() {
     return (
       <div className="sort-visualizer">
