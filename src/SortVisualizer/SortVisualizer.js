@@ -23,6 +23,7 @@ class SortVisualizer extends Component {
     };
     this.animate = this.animate.bind(this);
     this.beginBubbleSort = this.beginBubbleSort.bind(this);
+    this.beginSelectionSort = this.beginSelectionSort.bind(this);
   }
 
   async animate(animation) {
@@ -73,8 +74,48 @@ class SortVisualizer extends Component {
     if (n > 0) await this.animate({ [0]: new Bar(arr[0], "SORTED") });
   }
 
+  async beginSelectionSort() {
+    const arr = [];
+    const n = this.state.arr.length;
+    for (let i = 0; i < N; i++) {
+      arr[i] = this.state.arr[i].value;
+    }
+    for (let i = 0; i < n - 1; i++) {
+      let min_idx = i;
+      for (let j = i + 1; j < n; j++) {
+        await this.animate({
+          [j]: new Bar(arr[j], "SELECT"),
+          [min_idx]: new Bar(arr[min_idx], "SELECT"),
+        });
+        await this.animate({
+          [j]: new Bar(arr[j], "INIT"),
+          [min_idx]: new Bar(arr[min_idx], "INIT"),
+        });
+        if (arr[j] < arr[min_idx]) {
+          min_idx = j;
+        }
+      }
+
+      await this.animate({
+        [i]: new Bar(arr[min_idx], "SELECT"),
+        [min_idx]: new Bar(arr[i], "SELECT"),
+      });
+
+      let temp = arr[i];
+      arr[i] = arr[min_idx];
+      arr[min_idx] = temp;
+
+      await this.animate({
+        [min_idx]: new Bar(arr[min_idx], "INIT"),
+        [i]: new Bar(arr[i], "SORTED"),
+      });
+    }
+    if (n > 0) await this.animate({ [n - 1]: new Bar(arr[n - 1], "SORTED") });
+  }
+
   componentDidMount() {
-    this.beginBubbleSort();
+    // this.beginBubbleSort();
+    this.beginSelectionSort();
   }
 
   render() {
