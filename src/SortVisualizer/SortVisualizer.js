@@ -14,6 +14,15 @@ function generateRandomArray(n) {
   return array;
 }
 
+function deepCopyArrayValues(array) {
+  const arr = [];
+  const n = array.length;
+  for (let i = 0; i < n; i++) {
+    arr[i] = array[i].value;
+  }
+  return arr;
+}
+
 class SortVisualizer extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +33,7 @@ class SortVisualizer extends Component {
     this.animate = this.animate.bind(this);
     this.beginBubbleSort = this.beginBubbleSort.bind(this);
     this.beginSelectionSort = this.beginSelectionSort.bind(this);
+    this.beginInsertionSort = this.beginInsertionSort.bind(this);
   }
 
   async animate(animation) {
@@ -41,11 +51,8 @@ class SortVisualizer extends Component {
   }
 
   async beginBubbleSort() {
-    const arr = [];
-    const n = this.state.arr.length;
-    for (let i = 0; i < N; i++) {
-      arr[i] = this.state.arr[i].value;
-    }
+    const arr = deepCopyArrayValues(this.state.arr);
+    const n = arr.length;
 
     for (let i = 0; i < n - 1; i++) {
       for (let j = 0; j < n - 1 - i; j++) {
@@ -60,9 +67,8 @@ class SortVisualizer extends Component {
             [j + 1]: new Bar(arr[j], "SELECT"),
           });
 
-          let temp = arr[j];
-          arr[j] = arr[j + 1];
-          arr[j + 1] = temp;
+          // swap
+          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
         }
         await this.animate({
           [j]: new Bar(arr[j], "INIT"),
@@ -75,11 +81,9 @@ class SortVisualizer extends Component {
   }
 
   async beginSelectionSort() {
-    const arr = [];
-    const n = this.state.arr.length;
-    for (let i = 0; i < N; i++) {
-      arr[i] = this.state.arr[i].value;
-    }
+    const arr = deepCopyArrayValues(this.state.arr);
+    const n = arr.length;
+
     for (let i = 0; i < n - 1; i++) {
       let min_idx = i;
       for (let j = i + 1; j < n; j++) {
@@ -101,9 +105,8 @@ class SortVisualizer extends Component {
         [min_idx]: new Bar(arr[i], "SELECT"),
       });
 
-      let temp = arr[i];
-      arr[i] = arr[min_idx];
-      arr[min_idx] = temp;
+      // swap
+      [arr[i], arr[min_idx]] = [arr[min_idx], arr[i]];
 
       await this.animate({
         [min_idx]: new Bar(arr[min_idx], "INIT"),
@@ -113,9 +116,30 @@ class SortVisualizer extends Component {
     if (n > 0) await this.animate({ [n - 1]: new Bar(arr[n - 1], "SORTED") });
   }
 
+  async beginInsertionSort() {
+    const arr = deepCopyArrayValues(this.state.arr);
+    const n = arr.length;
+
+    if (n > 0) await this.animate({ [0]: new Bar(arr[0], "SORTED") });
+    for (let i = 1; i < n; i++) {
+      let j = i - 1;
+      await this.animate({ [i]: new Bar(arr[i], "SELECT") });
+      while (j >= 0 && arr[j] > arr[j + 1]) {
+        await this.animate({
+          [j]: new Bar(arr[j + 1], "SELECT"),
+          [j + 1]: new Bar(arr[j], "SORTED"),
+        });
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        j--;
+      }
+      await this.animate({ [j + 1]: new Bar(arr[j + 1], "SORTED") });
+    }
+  }
+
   componentDidMount() {
     // this.beginBubbleSort();
-    this.beginSelectionSort();
+    this.beginInsertionSort();
+    // this.beginSelectionSort();
   }
 
   render() {
