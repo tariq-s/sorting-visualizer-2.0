@@ -37,14 +37,18 @@ async function partition(arr, low, high) {
     [high]: new Bar(arr[high], "SELECT"),
   });
   await this.animate({
-    [j + 1]: new Bar(arr[j + 1], "INIT"),
     [high]: new Bar(arr[high], "INIT"),
+    [j + 1]: new Bar(arr[j + 1], "SORTED"),
   });
   return j + 1;
 }
 
 async function quickSortHelper(arr, low, high) {
-  if (low >= high) return;
+  if (low > high) return;
+  if (low == high) {
+    await this.animate({ [low]: new Bar(arr[low], "SORTED") });
+    return;
+  }
 
   let idx = await partition(arr, low, high);
   await quickSortHelper(arr, low, idx - 1);
@@ -57,9 +61,6 @@ async function quickSort() {
   quickSortHelper = quickSortHelper.bind(this);
   partition = partition.bind(this);
   await quickSortHelper(arr, 0, n - 1);
-  for (let i = 0; i < n; i++) {
-    await this.animate({ [i]: new Bar(arr[i], "SORTED") });
-  }
 }
 
 export default quickSort;
