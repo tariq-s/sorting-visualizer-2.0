@@ -9,8 +9,9 @@ import bubbleSort from "../sort_algorithms/bubbleSort";
 import selectionSort from "../sort_algorithms/selectionSort";
 import insertionSort from "../sort_algorithms/insertionSort";
 import mergeSort from "../sort_algorithms/mergeSort";
+import quickSort from "../sort_algorithms/quickSort";
 
-const N = 80;
+const N = 100;
 class SortVisualizer extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class SortVisualizer extends Component {
     this.beginSelectionSort = this.beginSelectionSort.bind(this);
     this.beginInsertionSort = this.beginInsertionSort.bind(this);
     this.beginMergeSort = this.beginMergeSort.bind(this);
+    this.beginQuickSort = this.beginQuickSort.bind(this);
   }
 
   async animate(animation, delay = 10) {
@@ -56,11 +58,16 @@ class SortVisualizer extends Component {
     mergeSort.call(this);
   }
 
+  async beginQuickSort() {
+    quickSort.call(this);
+  }
+
   componentDidMount() {
     // this.beginBubbleSort();
     // this.beginInsertionSort();
     // this.beginSelectionSort();
-    this.beginMergeSort();
+    // this.beginMergeSort();
+    this.beginQuickSort();
   }
 
   render() {
