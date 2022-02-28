@@ -139,6 +139,7 @@ class SortVisualizer extends Component {
           >
             {algos.map((algo, id) => (
               <div
+                key={id}
                 className={`algo ${
                   this.state.activeAlgo === id ? "active" : ""
                 }`}
