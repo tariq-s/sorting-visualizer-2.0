@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import "./SortVisualizer.css";
 
-import generateRandomArray from "../utils/generateRandomArray";
+import generateRandomArray from "../../utils/generateRandomArray";
 
 import Block from "../Block/Block";
 
-import bubbleSort from "../sort_algorithms/bubbleSort";
-import selectionSort from "../sort_algorithms/selectionSort";
-import insertionSort from "../sort_algorithms/insertionSort";
-import mergeSort from "../sort_algorithms/mergeSort";
-import quickSort from "../sort_algorithms/quickSort";
+import bubbleSort from "../../sort_algorithms/bubbleSort";
+import selectionSort from "../../sort_algorithms/selectionSort";
+import insertionSort from "../../sort_algorithms/insertionSort";
+import mergeSort from "../../sort_algorithms/mergeSort";
+import quickSort from "../../sort_algorithms/quickSort";
 
 const N = 100;
 class SortVisualizer extends Component {
