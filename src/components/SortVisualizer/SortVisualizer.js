@@ -17,7 +17,7 @@ function delay(speed) {
   return 101 - speed;
 }
 
-const N = 150;
+const N = 100;
 class SortVisualizer extends Component {
   constructor(props) {
     super(props);
@@ -126,36 +126,10 @@ class SortVisualizer extends Component {
             <button
               disabled={this.state.isRunning}
               onClick={this.generateNewArray}
+              style={{ minWidth: "150px" }}
             >
-              Generate New Array
+              GENERATE ARRAY
             </button>
-          </div>
-          <div className="controls">
-            <div className="control">
-              <label className="label">Size</label>
-              <input
-                id="size"
-                type="range"
-                disabled={this.state.isRunning}
-                value={this.state.n}
-                min={10}
-                max={150}
-                step={10}
-                onChange={this.handleSizeChange}
-              />
-            </div>
-            <div className="control">
-              <label className="label">Speed</label>
-              <input
-                id="speed"
-                type="range"
-                value={this.state.speed}
-                min={1}
-                max={100}
-                step={1}
-                onChange={this.handleSpeedChange}
-              />
-            </div>
           </div>
           <div
             className="algos"
@@ -172,7 +146,7 @@ class SortVisualizer extends Component {
                   this.handleAlgoChange(id);
                 }}
               >
-                {algo}
+                {`${algo} SORT`}
               </div>
             ))}
           </div>
@@ -181,8 +155,36 @@ class SortVisualizer extends Component {
               disabled={this.state.isRunning}
               onClick={() => this.setState({ isRunning: true }, this.startSort)}
             >
-              Sort
+              SORT
             </button>
+          </div>
+          <div className="controls">
+            <div className="control">
+              <label className="label">Size</label>
+              <input
+                id="size"
+                type="range"
+                disabled={this.state.isRunning}
+                value={this.state.n}
+                min={10}
+                max={150}
+                step={10}
+                onChange={this.handleSizeChange}
+                style={{ backgroundColor: "#5A4FCF" }}
+              />
+            </div>
+            <div className="control">
+              <label className="label">Speed</label>
+              <input
+                id="speed"
+                type="range"
+                value={this.state.speed}
+                min={1}
+                max={100}
+                step={1}
+                onChange={this.handleSpeedChange}
+              />
+            </div>
           </div>
         </div>
         <div className="screen">

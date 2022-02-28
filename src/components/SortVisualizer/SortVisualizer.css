@@ -1,7 +1,8 @@
 .navbar {
   display: flex;
-  height: 15%;
+  height: 12%;
   justify-content: space-around;
+  background-color: #e6e6fa;
 }
 
 .logo {
@@ -11,6 +12,8 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  text-align: center;
+  font-weight: bolder;
 }
 
 .controls {
@@ -36,25 +39,39 @@
 
 .algo {
   display: flex;
-  margin: 1rem;
+  padding: 0 1rem;
+  margin: 1rem 0;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  text-align: center;
 }
 
 .active {
   font-weight: bold;
+  /* color: #5a4fcf; */
+  color: #2222aa;
 }
 
 .button {
   display: flex;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
+}
+
+.button button {
+  border: 2px solid #2222aa;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #c0c0f2;
+  color: #2222aa;
+  font-weight: bold;
+  font-size: small;
   cursor: pointer;
 }
 
 .sort-visualizer {
-  height: 85%;
+  height: 88%;
 }
 
 .screen {
