@@ -1,6 +1,66 @@
+.navbar {
+  display: flex;
+  height: 15%;
+  justify-content: space-around;
+}
+
+.logo {
+  display: flex;
+  text-transform: uppercase;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.controls {
+  display: flex;
+}
+.control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.algos {
+  display: flex;
+  text-transform: uppercase;
+}
+
+.algo {
+  display: flex;
+  margin: 1rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  cursor: pointer;
+}
+
 .sort-visualizer {
+  height: 85%;
+}
+
+.screen {
   display: flex;
   height: 100%;
   width: 100%;
   align-items: flex-end;
+  padding: 0 10%;
 }

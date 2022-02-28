@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import "./Block.css";
 
 const stateColor = {
-  INIT: "#9E3498",
-  SELECT: "#E80310",
-  SORTED: "#11FA03",
+  INIT: "#A668A6",
+  SELECT: "#DC143C",
+  SORTED: "#50C878",
 };
 
 export class Block extends Component {
